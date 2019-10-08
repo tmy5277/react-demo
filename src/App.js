@@ -1,7 +1,37 @@
 import React from 'react';
+import { BrowserRouter as Router, Route, Switch, Link } from 'react-router-dom';
 import logo from './logo.svg';
 import './App.css';
 import InputAndBtn from './inputAndBtn'
+import Clock from './clock';
+
+function Home() {
+  return (
+    <div><h2>home - 123</h2></div>
+  )
+}
+
+function About(props) {
+  console.log('debug props', props)
+  let { match } = props
+  let routeClick = () => {
+    props.history.push({
+      pathname: "/about",
+      search: "?a=222",
+      query: { b: '333' },
+      state: { c: '444' }
+    })
+  }
+  return (
+    <div><h2 onClick={routeClick}>{`about - ${match.params.msg ? match.params.msg : '123'}`}</h2></div>
+  )
+}
+
+function NoMatch() {
+  return (
+    <div><h2>NoMatch</h2></div>
+  )
+}
 
 class App extends React.Component {
   constructor(props) {
@@ -33,7 +63,7 @@ class App extends React.Component {
     console.log('prevProps', prevProps)
     console.log('prevState', prevState)
     return {
-      snapshotMsg: 'msg from snapshot'
+      snapshotMsg: 'this is snapshot'
     }
   }
   componentDidUpdate(prevProps, prevState, snapshot) {
@@ -45,32 +75,47 @@ class App extends React.Component {
   componentWillUnmount() {
     console.log('componentWillUnmount')
   }
-  handleTimeInput = (val) => {
+  handleInputChange = (e) => {
     this.setState({
-      date: new Date(val)
+      date: new Date(e.target.value)
     })
   }
   render() {
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <InputAndBtn placeholder='请输入YYYY-MM-DD的时间格式' handleBtnClick={this.handleTimeInput}>
-            <div>
-              {this.props.author.split('').map((char, index) => <div key={index}>{char}</div>)}
-            </div>
-            <div>{this.state.date.toLocaleString()}</div>
-          </InputAndBtn>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
-      </div>
+      <Router>
+        <div className="App">
+          <header className="App-header">
+            <img src={logo} className="App-logo" alt="logo" />
+            <InputAndBtn placeholder='请输入YYYY/MM/DD的时间格式' handleInputChange={this.handleInputChange}>
+              <div>
+                {this.props.author ? this.props.author.split('').map((char, index) => <div key={index}>{char}</div>) : ''}
+              </div>
+              <div>{this.state.date.toLocaleString()}</div>
+            </InputAndBtn>
+            <a
+              className="App-link"
+              href="https://reactjs.org"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Learn React
+            </a>
+            <div><Link to="/test">Test</Link> <Link to={{
+              pathname: "/about",
+              search: "a=0123",
+              query: { b: '456' },
+              state: { c: '789' }
+            }}>About</Link></div>
+            <Switch>
+              <Route exact path="/" component={Home} />
+              <Route exact path="/about" component={About} />
+              <Route path="/about/:msg" component={About} />
+              <Route path="/test"><Clock date={this.state.date} /></Route>
+              <Route component={NoMatch} />
+            </Switch>
+          </header>
+        </div>
+      </Router>
     );
   }
 }
