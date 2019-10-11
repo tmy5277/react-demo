@@ -1,0 +1,15 @@
+.login-wrapper {
+  padding: 10px 30px;
+  background-color: #fff;
+  font-size: 16px;
+  .login-title {
+    margin: 20px 0;
+    color: #222;
+  }
+  .login-form {
+    min-width: 300px;
+    .login-form-button {
+      width: 100%;
+    }
+  }
+}

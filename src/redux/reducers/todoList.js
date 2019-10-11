@@ -1,22 +1,28 @@
-const todos = (state = [], action) => {
+const todoList = (state = { todos: [] }, action) => {
   switch (action.type) {
     case 'ADD_TODO':
-      return [
+      let addTodos = state.todos.concat({
+        id: action.id,
+        text: action.text,
+        completed: false
+      })
+      return {
         ...state,
-        {
-          id: action.id,
-          text: action.text,
-          completed: false
-        }
-      ]
+        todos: addTodos
+      }
     case 'TOGGLE_TODO':
-      return state.map(
-        todo =>
-          todo.id === action.id ? { ...todo, completed: !todo.completed } : todo
+      let count = state.count ? state.count + 1 : 1
+      let todos = state.todos.map(
+        todo => todo.id === action.id ? { ...todo, completed: !todo.completed } : todo
       )
+      return {
+        ...state,
+        todos,
+        count
+      }
     default:
       return state
   }
 }
 
-export default todos
+export default todoList
