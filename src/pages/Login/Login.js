@@ -9,8 +9,9 @@ import './index.scss'
 const mailReg = /^([a-zA-Z0-9._-])+@([a-zA-Z0-9_-])+(\.[a-zA-Z0-9_-]+)/
 
 const mapStateToProps = state => ({
-  account: state.account,
-  pwd: state.pwd
+  account: state.login.account,
+  password: state.login.password,
+  isLogin: state.login.isLogin
 })
 
 const mapDispatchToProps = dispatch => ({
@@ -21,10 +22,17 @@ class Login extends React.Component {
   constructor(props) {
     super(props)
     this.state = {}
+    this.submitBtn = React.createRef()
   }
   componentDidMount() {
+    console.log(this)
   }
   static getDerivedStateFromProps(nextProps, prevState) {
+    if (nextProps.isLogin === true) {
+      nextProps.history.replace({
+        pathname: '/testDemo'
+      })
+    }
     return null
   }
   shouldComponentUpdate(nextProps, nextState) {
@@ -39,17 +47,29 @@ class Login extends React.Component {
   }
   componentWillUnmount() {
   }
+  handleSubmit = e => {
+    e.preventDefault()
+    let form = this.props.form
+    form.validateFields((err, values) => {
+      if (!err) {
+        this.props.userLogin(values)
+      }
+    });
+  }
   render() {
     let { getFieldDecorator } = this.props.form
+    let { account, password, isLogin } = this.props
+    // console.log(this.props)
     return (
       <section className="login-wrapper">
-        <div className="login-title"><h2>Login Demo</h2></div>
-        <Form className="login-form">
+        <div className="login-title"><h2>Login Demo {this.props.isLogin}</h2>{`${account}-${password}-${isLogin}`}</div>
+        <Form className="login-form" onSubmit={this.handleSubmit}>
           <Form.Item>
-            {getFieldDecorator('username', {
+            {getFieldDecorator('account', {
               rules: [{
-                required: true, pattern: mailReg, message: 'Please input your Account correctly!'
+                required: true, pattern: mailReg, message: 'Please input your Account corrently!'
               }],
+              validateTrigger: 'onBlur'
             })(
               <Input
                 prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />}
@@ -59,17 +79,24 @@ class Login extends React.Component {
           </Form.Item>
           <Form.Item>
             {getFieldDecorator('password', {
-              rules: [{ required: true, min: 8, max: 16, message: 'Please input your Password correctly!' }],
+              rules: [{ required: true, min: 8, message: 'Please input your Password corrently!' }],
+              validateTrigger: 'onBlur'
             })(
               <Input
                 prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />}
                 type="password"
                 placeholder="Password"
+                onKeyDown={e => {
+                  if (e.keyCode === 13) {
+                    // ref 触发按钮点击 不确定是否是常规写法
+                    this.submitBtn.current.handleClick()
+                  }
+                }}
               />,
             )}
           </Form.Item>
           <Form.Item>
-            <Button type="primary" htmlType="submit" className="login-form-button">
+            <Button type="primary" htmlType="submit" className="login-form-button" ref={this.submitBtn}>
               Log in
             </Button>
           </Form.Item>
@@ -79,6 +106,4 @@ class Login extends React.Component {
   }
 }
 
-const loginForm = Form.create({ name: 'normal_login' })(Login);
-
-export default connect(mapStateToProps, mapDispatchToProps)(loginForm);
+export default connect(mapStateToProps, mapDispatchToProps)(Form.create({ name: 'normal_login' })(Login));

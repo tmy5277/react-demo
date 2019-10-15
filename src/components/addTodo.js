@@ -6,7 +6,7 @@ const AddTodo = ({ dispatch }) => {
 	let input
 
 	return (
-		<div>
+		<div style={{color: '#222'}}>
 			<form onSubmit={e => {
 				e.preventDefault()
 				if (!input.value.trim()) {

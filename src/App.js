@@ -1,12 +1,14 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
 import { Icon } from 'antd'
-import TestDemo from './pages/TestDemo'
-import Login from './pages/Login/Login'
+import RouteGuard from './router/index'
+import routes from './router/routeMap'
+
+import './App.css'
 
 function NoMatch() {
   return (
-    <div><Icon type="warning" theme="twoTone" twoToneColor="red" /><h2 style={{display: 'block', color: 'white'}}>404 Not Found</h2></div>
+    <div><Icon type="warning" theme="twoTone" twoToneColor="red" /><h2 style={{ display: 'block', color: 'white' }}>404 Not Found</h2></div>
   )
 }
 class App extends React.Component {
@@ -15,6 +17,7 @@ class App extends React.Component {
     this.state = {}
   }
   componentDidMount() {
+    // console.log(this)
   }
   static getDerivedStateFromProps(nextProps, prevState) {
     return null
@@ -36,13 +39,13 @@ class App extends React.Component {
       <Router>
         <div className="App">
           <header className="App-header">
-            <Switch>
-              <Redirect exact from="/" to="/login" />
-              <Route exact path="/login" component={Login} />
-              <Route path="/home" component={TestDemo} />
-              <Route path="/testDemo" component={TestDemo} />
-              <Route component={NoMatch} />
-            </Switch>
+            <Suspense fallback={<>Loading...</>}>
+              <Switch>
+                <Redirect exact from="/" to="/login" />
+                  <RouteGuard routes={routes}/>
+                <Route component={NoMatch} />
+              </Switch>
+            </Suspense>
           </header>
         </div>
       </Router>

@@ -5,7 +5,7 @@ function InputAndBtn(props) {
 	return (
 		<div className="app-time-input">
 			<div>
-				<input style={{ width: '200px' }} placeholder={placeholder} onBlur={handleInputChange}></input>
+				<input style={{ width: '250px', color: '#222' }} placeholder={placeholder} onBlur={handleInputChange}></input>
 			</div>
 			<div>
 				{props.children}

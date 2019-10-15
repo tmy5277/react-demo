@@ -1,15 +1,17 @@
-import * as types from '../action_types'
+import * as types from '../action-types'
 
-const login = (state = { isLogin: false, account: '', pwd: '' }, action) => {
+const defaultState = {
+  isLogin: false,
+  account: '',
+  password: ''
+}
+
+const login = (state = defaultState, action) => {
   switch (action.type) {
     case types.USER_LOGIN:
-      let { account, pwd } = action.item
-      let isLogin = account === 'mingyu.tan@yff.com' && pwd === '123456pb'
+      // console.log(action.item)
       return {
-        ...state,
-        isLogin,
-        account,
-        pwd
+        ...action.item
       }
     default:
       return state

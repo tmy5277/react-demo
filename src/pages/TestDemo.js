@@ -1,5 +1,6 @@
 import React from 'react';
 import { Route, Switch, Link } from 'react-router-dom';
+import { connect } from 'react-redux'
 import logo from '../logo.svg';
 import '../App.css';
 import InputAndBtn from '../components/InputAndBtn'
@@ -8,6 +9,10 @@ import Timer from '../components/Timer'
 import AddTodo from '../components/AddTodo'
 import TodoList from '../components/TodoList'
 import ErrorBoundary from '../components/ErrorBoundary'
+
+const mapStateToProps = state => ({
+  isLogin: state.login.isLogin
+})
 
 function Home(props) {
   return (
@@ -19,7 +24,7 @@ function About(props) {
   let { match } = props
   let routeClick = () => {
     props.history.push({
-      pathname: "/about",
+      pathname: "/testDemo/about",
       search: "?a=222",
       query: { b: '333' },
       state: { c: '444' }
@@ -51,6 +56,7 @@ class TestDemo extends React.Component {
     }
   }
   componentDidMount() {
+    console.log(this)
   }
   static getDerivedStateFromProps(nextProps, prevState) {
     return null
@@ -78,6 +84,7 @@ class TestDemo extends React.Component {
   render() {
     return (
         <>
+          <div>{`${this.props.isLogin}`}</div>
           <img src={logo} className="App-logo" alt="logo" />
           <InputAndBtn placeholder='请输入YYYY/MM/DD的时间格式' handleInputChange={this.handleInputChange}>
             <div>
@@ -93,22 +100,26 @@ class TestDemo extends React.Component {
           >
             Learn React
           </a>
-          <div><Link to="/testDemo/test">Test</Link> <Link to={{
-            pathname: "/testDemo/about",
-            search: "a=0123",
-            query: { b: '456' },
-            state: { c: '789' }
-          }}>About</Link> <Link to="/testDemo/todo">TODO</Link></div>
-          <Switch>
-            <Route exact path="/testDemo" component={Home} />
-            <Route path="/testDemo/about" component={About} />
-            <Route path="/testDemo/about/:msg" component={About} />
-            <Route path="/testDemo/test"><div><Clock></Clock></div><div><Timer date={this.state.date} /></div></Route>
-            <Route path="/testDemo/todo" component={TodoComponent} />
-          </Switch>
+          <section style={{color: '#222'}}>
+            <Link to="/testDemo/test">Test</Link> <Link to={{
+              pathname: "/testDemo/about",
+              search: "a=0123",
+              query: { b: '456' },
+              state: { c: '789' }
+            }}>About</Link> <Link to="/testDemo/todo">TODO</Link>
+          </section>
+          <section>
+            <Switch>
+              <Route exact path="/testDemo" component={Home} />
+              <Route path="/testDemo/about" component={About} />
+              <Route path="/testDemo/about/:msg" component={About} />
+              <Route path="/testDemo/test"><div><Clock></Clock></div><div><Timer date={this.state.date} /></div></Route>
+              <Route path="/testDemo/todo" component={TodoComponent} />
+            </Switch>
+          </section>
         </>
     );
   }
 }
 
-export default TestDemo;
+export default connect(mapStateToProps)(TestDemo);
