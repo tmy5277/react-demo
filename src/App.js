@@ -1,23 +1,25 @@
 import React, { Suspense } from 'react';
-import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
+import { BrowserRouter as Router } from 'react-router-dom';
+import { connect } from 'react-redux'
+import { checkLogin } from './redux/actions/index'
+
 import { Icon } from 'antd'
 import RouteGuard from './router/index'
 import routes from './router/routeMap'
 
 import './App.css'
 
-function NoMatch() {
-  return (
-    <div><Icon type="warning" theme="twoTone" twoToneColor="red" /><h2 style={{ display: 'block', color: 'white' }}>404 Not Found</h2></div>
-  )
-}
+const mapDispatchToProps = dispatch => ({
+  checkLogin: () => dispatch(checkLogin())
+})
+
 class App extends React.Component {
   constructor(props) {
     super(props)
     this.state = {}
   }
   componentDidMount() {
-    // console.log(this)
+    this.props.checkLogin()
   }
   static getDerivedStateFromProps(nextProps, prevState) {
     return null
@@ -39,12 +41,8 @@ class App extends React.Component {
       <Router>
         <div className="App">
           <header className="App-header">
-            <Suspense fallback={<>Loading...</>}>
-              <Switch>
-                <Redirect exact from="/" to="/login" />
-                  <RouteGuard routes={routes}/>
-                <Route component={NoMatch} />
-              </Switch>
+            <Suspense fallback={<Icon type="loading" style={{ fontSize: 24 }} spin />}>
+              <RouteGuard routes={routes}/>
             </Suspense>
           </header>
         </div>
@@ -53,4 +51,4 @@ class App extends React.Component {
   }
 }
 
-export default App;
+export default connect(null, mapDispatchToProps)(App);

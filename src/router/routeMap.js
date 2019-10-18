@@ -1,23 +1,44 @@
 import React from 'react'
 
-const Login = React.lazy(() => import('../pages/Login/Login'))
-const TestDemo = React.lazy(() => import('../pages/TestDemo'))
+// function generateFlatRoutes(routes) {
+//   let flatRoutes = []
+//   routes.map(item => {
+//     if (item.children) {
+//       flatRoutes = flatRoutes.concat(generateFlatRoutes(item.children))
+//     } else {
+//       flatRoutes.push(item)
+//     }
+//     return item
+//   })
+//   return flatRoutes.flat()
+// }
 
+// 一级路由
 const routesMap = [
   {
-    path: '/',
-    exact: true   //必须设置为true，否则默认匹配所有路由，但却没有指定组件
+    path: '/login',
+    component: React.lazy(() => import('../pages/Login/Login')),
+    meta: {
+      name: '登录',
+      exact: true
+    }
   },
   {
-    path: '/login',
-    component: Login,
-    exact: true
+    path: '/home',
+    component: React.lazy(() => import('../pages/Home/Home')),
+    meta: {
+      name: '首页',
+      auth: true
+    }
   },
   {
     path: '/testDemo',
-    component: TestDemo,
-    auth: true
+    component: React.lazy(() => import('../pages/TestDemo')),
+    meta: {
+      name: 'Demo',
+      auth: true
+    }
   }
 ]
 
-export default routesMap 
+export default routesMap

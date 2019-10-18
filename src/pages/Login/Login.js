@@ -18,7 +18,7 @@ const mapDispatchToProps = dispatch => ({
   userLogin: item => dispatch(userLogin(item))
 })
 
-class Login extends React.Component {
+class Login extends React.PureComponent {
   constructor(props) {
     super(props)
     this.state = {}
@@ -30,20 +30,21 @@ class Login extends React.Component {
   static getDerivedStateFromProps(nextProps, prevState) {
     if (nextProps.isLogin === true) {
       nextProps.history.replace({
-        pathname: '/testDemo'
+        pathname: '/home'
       })
     }
     return null
   }
-  shouldComponentUpdate(nextProps, nextState) {
-    return true
-  }
+  // shouldComponentUpdate(nextProps, nextState) {
+  //   return true
+  // }
   getSnapshotBeforeUpdate(prevProps, prevState) {
     return {
       snapshotMsg: 'this is snapshot'
     }
   }
   componentDidUpdate(prevProps, prevState, snapshot) {
+    // console.log(11)
   }
   componentWillUnmount() {
   }
