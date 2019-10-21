@@ -18,11 +18,12 @@ const login = (state = defaultState, action) => {
         ...action.item
       }
     case types.CHECK_LOGIN:
-      let account = sessionStorage.getItem('UID')
+      let account = sessionStorage.getItem('UID'),
+        isLogin = !!account
       return {
         ...state,
         account,
-        isLogin: !!account
+        isLogin
       }
     default:
       return state

@@ -3,11 +3,14 @@ import { BrowserRouter as Router } from 'react-router-dom';
 import { connect } from 'react-redux'
 import { checkLogin } from './redux/actions/index'
 
-import { Icon } from 'antd'
+import { Icon, Layout } from 'antd'
+import NavBar from './components/NavBar/index'
 import RouteGuard from './router/index'
 import routes from './router/routeMap'
 
-import './App.css'
+import './App.scss'
+
+const { Sider, Content } = Layout;
 
 const mapDispatchToProps = dispatch => ({
   checkLogin: () => dispatch(checkLogin())
@@ -40,11 +43,15 @@ class App extends React.Component {
     return (
       <Router>
         <div className="App">
-          <header className="App-header">
-            <Suspense fallback={<Icon type="loading" style={{ fontSize: 24 }} spin />}>
-              <RouteGuard routes={routes}/>
-            </Suspense>
-          </header>
+          <Layout className="App-layout">
+            <NavBar></NavBar>
+            {/* <Sider width="260"></Sider> */}
+            <Content>
+              <Suspense fallback={<Icon type="loading" style={{ fontSize: 24 }} spin />}>
+                <RouteGuard routes={routes}/>
+              </Suspense>
+            </Content>
+          </Layout>
         </div>
       </Router>
     );

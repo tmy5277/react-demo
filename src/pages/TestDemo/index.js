@@ -1,14 +1,15 @@
 import React from 'react';
 import { Route, Switch, Link } from 'react-router-dom';
 import { connect } from 'react-redux'
-import logo from '../logo.svg';
-import InputAndBtn from '../components/InputAndBtn'
-import Clock from '../components/Clock'
-import Timer from '../components/Timer'
-import AddTodo from '../components/AddTodo'
-import TodoList from '../components/TodoList'
-import ErrorBoundary from '../components/ErrorBoundary'
-import '../App.css';
+import logo from '../../logo.svg';
+import InputAndBtn from '../../components/InputAndBtn'
+import Clock from '../../components/Clock'
+import Timer from '../../components/Timer'
+import AddTodo from '../../components/AddTodo'
+import TodoList from '../../components/TodoList'
+import ErrorBoundary from '../../components/ErrorBoundary'
+
+import '../../App.scss';
 
 const mapStateToProps = state => ({
   isLogin: state.login.isLogin

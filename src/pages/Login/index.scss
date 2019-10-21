@@ -1,4 +1,14 @@
-.login-wrapper {
+
+.login-main {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  background: #282c34;
+}.login-wrapper {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   padding: 10px 30px;
   background-color: #fff;
   font-size: 16px;

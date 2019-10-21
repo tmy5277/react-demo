@@ -26,11 +26,11 @@ class RouterGuard extends React.Component {
   }
   render() {
     let { isLogin, routes } = this.props
-    console.log(isLogin)
+    // console.log(isLogin)
     return (
       <>
         <Switch>
-          <Redirect exact from="/" to="/login" />
+          <Redirect exact from="/" to="/home" />
           {
             routes.map((item, index) => {
               item.meta = item.meta || {}

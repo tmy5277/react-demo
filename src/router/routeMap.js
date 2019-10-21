@@ -17,7 +17,7 @@ import React from 'react'
 const routesMap = [
   {
     path: '/login',
-    component: React.lazy(() => import('../pages/Login/Login')),
+    component: React.lazy(() => import('../pages/Login/index')),
     meta: {
       name: '登录',
       exact: true
@@ -25,7 +25,7 @@ const routesMap = [
   },
   {
     path: '/home',
-    component: React.lazy(() => import('../pages/Home/Home')),
+    component: React.lazy(() => import('../pages/Home/index')),
     meta: {
       name: '首页',
       auth: true
@@ -33,7 +33,7 @@ const routesMap = [
   },
   {
     path: '/testDemo',
-    component: React.lazy(() => import('../pages/TestDemo')),
+    component: React.lazy(() => import('../pages/TestDemo/index')),
     meta: {
       name: 'Demo',
       auth: true
