@@ -1,78 +1,88 @@
+import React from 'react'
 import * as types from '../action-types'
-import routesMap from '../../router/routeMap'
 
-let topBarArr = routesMap.filter(item => item.path !== '/login').map(item => ({ path: item.path, name: item.meta.name }))
+let baseRoutes = [
+  {
+    path: '/login',
+    component: React.lazy(() => import('../../pages/Login/index')),
+    meta: {
+      name: '登录',
+      exact: true
+    }
+  },
+  {
+    path: '/home',
+    component: React.lazy(() => import('../../pages/Home/index')),
+    meta: {
+      name: '首页',
+      auth: true
+    }
+  },
+  {
+    path: '/testDemo',
+    component: React.lazy(() => import('../../pages/TestDemo/index')),
+    meta: {
+      name: 'Demo',
+      auth: true
+    }
+  }
+]
+let topBarArr = baseRoutes.filter(item => item.path !== '/login').map(item => ({ path: item.path, name: item.meta.name }))
 let mainEntranceArr = [
   {
     path: '/user',
-    name: '用户管理',
+    component: React.lazy(() => import('../../pages/Home/index')),
     meta: {
+      name: '用户管理',
       disabled: false,
-      isShow: true
+      isShow: true,
+      auth: true
     },
     children: [
       {
         path: '/user/1',
-        name: '用户管理1',
+        component: React.lazy(() => import('../../pages/Home/index')),
         meta: {
+          name: '用户管理1',
           disabled: false,
           isShow: true
         }
       },
       {
         path: '/user/2',
-        name: '用户管理2',
+        component: React.lazy(() => import('../../pages/Home/index')),
         meta: {
+          name: '用户管理2',
           disabled: false,
           isShow: true
         }
       },
-      {
-        path: '/user/3',
-        name: '用户管理3',
-        meta: {
-          disabled: false,
-          isShow: true
-        }
-      }
     ]
   },
   {
     path: '/order',
-    name: '订单管理',
+    component: React.lazy(() => import('../../pages/Home/index')),
     meta: {
+      name: '订单管理',
       disabled: false,
-      isShow: true
+      isShow: true,
+      auth: true
     },
     children: [
       {
         path: '/order/1',
-        name: '订单管理1',
+        component: React.lazy(() => import('../../pages/Home/index')),
         meta: {
+          name: '订单管理1',
           disabled: false,
           isShow: true
         }
       },
       {
         path: '/order/2',
-        name: '订单管理2',
+        component: React.lazy(() => import('../../pages/Home/index')),
         meta: {
-          disabled: false,
-          isShow: true
-        }
-      },
-      {
-        path: '/order/3',
-        name: '订单管理3',
-        meta: {
-          disabled: false,
-          isShow: true
-        }
-      },
-      {
-        path: '/order/4',
-        name: '订单管理4',
-        meta: {
+          name: '订单管理2',
           disabled: false,
           isShow: true
         }
@@ -81,16 +91,19 @@ let mainEntranceArr = [
   },
   {
     path: '/data',
-    name: '数据信息管理',
+    component: React.lazy(() => import('../../pages/Home/index')),
     meta: {
+      name: '数据信息管理',
       disabled: false,
-      isShow: true
+      isShow: true,
+      auth: true
     },
     children: [
       {
         path: '/data/1',
-        name: '数据信息管理1',
+        component: React.lazy(() => import('../../pages/Home/index')),
         meta: {
+          name: '数据信息管理1',
           disabled: false,
           isShow: true
         }
@@ -99,24 +112,20 @@ let mainEntranceArr = [
   },
   {
     path: '/permission',
-    name: '权限管理',
+    component: React.lazy(() => import('../../pages/Home/index')),
     meta: {
+      name: '权限管理',
       disabled: false,
-      isShow: true
+      isShow: true,
+      auth: true,
+      extra: true
     },
     children: [
       {
-        path: '/permission/1',
-        name: '权限管理1',
+        path: '/permission/a',
+        component: React.lazy(() => import('../../pages/Home/index')),
         meta: {
-          disabled: false,
-          isShow: true
-        }
-      },
-      {
-        path: '/permission/2',
-        name: '权限管理2',
-        meta: {
+          name: '权限管理1',
           disabled: false,
           isShow: true
         }
@@ -124,11 +133,14 @@ let mainEntranceArr = [
     ]
   },
 ]
+let routesMap = baseRoutes.concat(mainEntranceArr)
 
 const defaultState = {
   topBar: topBarArr,
   topBarIndex: 0,
-  mainEntrance: mainEntranceArr
+  baseRoutes,
+  mainEntrance: mainEntranceArr,
+  routesMap,
 }
 
 const menu = (state = defaultState, action) => {

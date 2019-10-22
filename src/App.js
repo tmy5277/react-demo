@@ -6,11 +6,14 @@ import { checkLogin } from './redux/actions/index'
 import { Icon, Layout } from 'antd'
 import NavBar from './components/NavBar/index'
 import RouteGuard from './router/index'
-import routes from './router/routeMap'
 
 import './App.scss'
 
 const { Sider, Content } = Layout;
+
+const mapStateToProps = state => ({
+  routesMap: state.menu.routesMap
+})
 
 const mapDispatchToProps = dispatch => ({
   checkLogin: () => dispatch(checkLogin())
@@ -40,6 +43,7 @@ class App extends React.Component {
   componentWillUnmount() {
   }
   render() {
+    let { routesMap } = this.props
     return (
       <Router>
         <div className="App">
@@ -48,7 +52,7 @@ class App extends React.Component {
             {/* <Sider width="260"></Sider> */}
             <Content>
               <Suspense fallback={<Icon type="loading" style={{ fontSize: 24 }} spin />}>
-                <RouteGuard routes={routes}/>
+                <RouteGuard routes={routesMap}/>
               </Suspense>
             </Content>
           </Layout>
@@ -58,4 +62,4 @@ class App extends React.Component {
   }
 }
 
-export default connect(null, mapDispatchToProps)(App);
+export default connect(mapStateToProps, mapDispatchToProps)(App);

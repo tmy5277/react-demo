@@ -42,7 +42,7 @@ class Home extends React.PureComponent {
   componentWillUnmount() {
   }
   render() {
-    let { mainEntrance } = this.props
+    let { mainEntrance, history: { push } } = this.props
     return (
       <section className="home-main">
         <Collapse bordered={false} className="home-collapse" expandIcon={(props) => {
@@ -52,18 +52,20 @@ class Home extends React.PureComponent {
             mainEntrance.map((item, index) => {
               item.meta = item.meta || {}
               item.children = item.children || []
-              if (item.meta.isShow) {
-                return (<Panel disabled={item.meta.disabled} header={item.name} key={index} className="home-collapse__panel">
+              let { isShow, disabled, name } = item.meta
+              if (isShow) {
+                return (<Panel disabled={disabled} header={name} key={item.path} className="home-collapse__panel">
                   {
                     item.children.map(child => {
-                      return <Button style={{
+                      child.meta = child.meta || {}
+                      return <Button key={child.path} style={{
                         marginRight: '30px'
-                      }}>{child.name}</Button>
+                      }} onClick={() => {push({ pathname: child.path })}}>{child.meta.name}</Button>
                     })
                   }
                 </Panel>)
               } else {
-                return (<></>)
+                return null
               }
             })
           }

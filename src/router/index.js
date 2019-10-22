@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import { Icon } from 'antd'
 import { urlHandler } from '../utils/index'
 
-function NoMatch({location: {search}}) {
+function NoMatch({ location: { search } }) {
   let pathName = urlHandler.getUrlObj(search).from
   // console.log(pathName)
   return (
@@ -26,26 +26,46 @@ class RouterGuard extends React.Component {
   }
   render() {
     let { isLogin, routes } = this.props
-    // console.log(isLogin)
+    // console.log(isLogin, routes)
+
+    function renderRoutesMap(r) {
+      if (!(r instanceof Array) || !r.length) {
+        return []
+      }
+      return r.map((item, index) => {
+        item.meta = item.meta || {}
+        const { exact, auth } = item.meta
+        console.log(item.path)
+        let result = (<Route key={item.path} path={item.path} exact={!!exact} render={props => {
+          if (auth) {
+            return (
+              isLogin ? (
+                <><item.component {...props} />
+                {
+                  renderRoutesMap(item.children).map(child => child)
+                }</>
+              ) : (
+                  <Redirect to={{
+                    pathname: '/login',
+                    state: { from: props.location }
+                  }} />
+                )
+            )
+          } else {
+            return (
+              <><item.component {...props} />{renderRoutesMap(item.children).map(child => child)}</>
+            )
+          }
+        }} />)
+        return result
+      })
+    }
     return (
       <>
         <Switch>
           <Redirect exact from="/" to="/home" />
           {
-            routes.map((item, index) => {
-              item.meta = item.meta || {}
-              const { exact, auth } = item.meta
-              return <Route key={index} path={item.path} exact={!!exact} render={props => {
-                if (auth) {
-                  return (isLogin ? <item.component {...props} /> : <Redirect to={{
-                    pathname: '/login',
-                    state: { from: props.location }
-                  }} />)
-                } else {
-                  return (<item.component {...props} />)
-                }
-              }} />
-            })
+            renderRoutesMap(routes).map(route => route)
           }
           <Route component={NoMatch} />
         </Switch>
