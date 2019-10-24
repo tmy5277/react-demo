@@ -1,7 +1,7 @@
 import React from 'react';
 // import { Link } from 'react-router-dom';
 import { connect } from 'react-redux'
-import { userLogin } from '../../redux/actions/index'
+import { userLogin } from '../../redux/actions/login'
 import { Form, Icon, Input, Button } from 'antd';
 
 import './index.scss'

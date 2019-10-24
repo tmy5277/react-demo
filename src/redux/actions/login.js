@@ -1,19 +1,6 @@
 import * as types from '../action-types'
 import { message } from 'antd'
 
-let nextTodoId = 0
-
-export const addTodo = text => ({
-	type: 'ADD_TODO',
-	id: nextTodoId++,
-	text
-})
-
-export const toggleTodo = id => ({
-	type: 'TOGGLE_TODO',
-	id
-})
-
 export const userLogin = item => (dispatch, getState) => {
   return new Promise((resolve, reject) => {
     setTimeout(() => {

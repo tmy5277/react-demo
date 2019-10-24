@@ -1,6 +1,8 @@
+import * as types from '../action-types'
+
 const todoList = (state = { todos: [] }, action) => {
   switch (action.type) {
-    case 'ADD_TODO':
+    case types.ADD_TODO:
       let addTodos = state.todos.concat({
         id: action.id,
         text: action.text,
@@ -10,7 +12,7 @@ const todoList = (state = { todos: [] }, action) => {
         ...state,
         todos: addTodos
       }
-    case 'TOGGLE_TODO':
+    case types.TOGGLE_TODO:
       let count = state.count ? state.count + 1 : 1
       let todos = state.todos.map(
         todo => todo.id === action.id ? { ...todo, completed: !todo.completed } : todo

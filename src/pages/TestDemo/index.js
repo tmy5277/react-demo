@@ -7,7 +7,6 @@ import Clock from '../../components/Clock'
 import Timer from '../../components/Timer'
 import AddTodo from '../../components/AddTodo'
 import TodoList from '../../components/TodoList'
-import ErrorBoundary from '../../components/ErrorBoundary'
 
 import '../../App.scss';
 
@@ -32,9 +31,7 @@ function About(props) {
     })
   }
   return (
-    <ErrorBoundary>
-      <div><h2 onClick={routeClick}>{`about - ${match.params.msg ? match.params.msg : '123'}`}</h2></div>
-    </ErrorBoundary>
+    <div><h2 onClick={routeClick}>{`about - ${match.params.msg ? match.params.msg : '123'}`}</h2></div>
   )
 }
 
@@ -86,44 +83,46 @@ class TestDemo extends React.Component {
   render() {
     let { match } = this.props
     return (
-        <>
-          <div onClick={() => {window.$http.post('http://localhost:8092/v2/cms/account/permission/management/admin/create', {
+      <>
+        <div onClick={() => {
+          window.$http.post('http://localhost:8092/v2/cms/account/permission/management/admin/create', {
             account: 'react',
             email: 'mingyu.tan@yff.com'
-          })}}>{`${this.props.isLogin}`}</div>
-          <img src={logo} className="App-logo" alt="logo" />
-          <InputAndBtn placeholder='请输入YYYY/MM/DD的时间格式' handleInputChange={this.handleInputChange}>
-            <div>
-              {this.props.author ? this.props.author.split('').map((char, index) => <div key={index}>{char}</div>) : ''}
-            </div>
-            <div>{this.state.timeNow.toLocaleString()}</div>
-          </InputAndBtn>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
+          })
+        }}>{`${this.props.isLogin}`}</div>
+        <img src={logo} className="App-logo" alt="logo" />
+        <InputAndBtn placeholder='请输入YYYY/MM/DD的时间格式' handleInputChange={this.handleInputChange}>
+          <div>
+            {this.props.author ? this.props.author.split('').map((char, index) => <div key={index}>{char}</div>) : ''}
+          </div>
+          <div>{this.state.timeNow.toLocaleString()}</div>
+        </InputAndBtn>
+        <a
+          className="App-link"
+          href="https://reactjs.org"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Learn React
           </a>
-          <section style={{color: '#222'}}>
-            <Link to={`${match.url}/test`}>Test</Link> <Link to={{
-              pathname: `${match.url}/about`,
-              search: "a=0123",
-              query: { b: '456' },
-              state: { c: '789' }
-            }}>About</Link> <Link to={`${match.url}/todo`}>TODO</Link>
-          </section>
-          <section>
-            <Switch>
-              <Route exact path={`${match.url}`} component={Home} />
-              <Route exact path={`${match.url}/about`} component={About} />
-              <Route exact path={`${match.url}/about/:msg`} component={About} />
-              <Route exact path={`${match.url}/test`}><div><Clock></Clock></div><div><Timer date={this.state.date} /></div></Route>
-              <Route exact path={`${match.url}/todo`} component={TodoComponent} />
-            </Switch>
-          </section>
-        </>
+        <section style={{ color: '#222' }}>
+          <Link to={`${match.url}/test`}>Test</Link> <Link to={{
+            pathname: `${match.url}/about`,
+            search: "a=0123",
+            query: { b: '456' },
+            state: { c: '789' }
+          }}>About</Link> <Link to={`${match.url}/todo`}>TODO</Link>
+        </section>
+        <section>
+          <Switch>
+            <Route exact path={`${match.url}`} component={Home} />
+            <Route exact path={`${match.url}/about`} component={About} />
+            <Route exact path={`${match.url}/about/:msg`} component={About} />
+            <Route exact path={`${match.url}/test`}><div><Clock></Clock></div><div><Timer date={this.state.date} /></div></Route>
+            <Route exact path={`${match.url}/todo`} component={TodoComponent} />
+          </Switch>
+        </section>
+      </>
     );
   }
 }
