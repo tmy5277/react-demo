@@ -117,13 +117,12 @@ let mainEntranceArr = [
       name: '权限管理',
       disabled: false,
       isShow: true,
-      auth: true,
-      extra: true
+      auth: true
     },
     children: [
       {
         path: '/permission/a',
-        component: React.lazy(() => import('../../pages/Home/index')),
+        component: React.lazy(() => import('../../pages/TestDemo/index')),
         meta: {
           name: '权限管理1',
           disabled: false,

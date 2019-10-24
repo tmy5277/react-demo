@@ -3,11 +3,9 @@ import { Link, NavLink } from 'react-router-dom';
 import { connect } from 'react-redux'
 import { userLogin } from '../../redux/actions/index'
 
-import { Collapse, Button, Icon } from 'antd'
+import { Button } from 'antd'
 
 import './index.scss'
-
-const { Panel } = Collapse
 
 const mapStateToProps = state => ({
   mainEntrance: state.menu.mainEntrance
@@ -42,34 +40,33 @@ class Home extends React.PureComponent {
   componentWillUnmount() {
   }
   render() {
-    let { mainEntrance, history: { push } } = this.props
+    let { mainEntrance, history: { push }, children } = this.props
     return (
       <section className="home-main">
-        <Collapse bordered={false} className="home-collapse" expandIcon={(props) => {
-          return <Icon type="setting" />
-        }}>
+        <div>{children}</div>
+        <div className="home-list">
           {
-            mainEntrance.map((item, index) => {
-              item.meta = item.meta || {}
-              item.children = item.children || []
-              let { isShow, disabled, name } = item.meta
-              if (isShow) {
-                return (<Panel disabled={disabled} header={name} key={item.path} className="home-collapse__panel">
+            mainEntrance.map(item => {
+              return (
+                <div key={item.path} className="home-list__item">
+                  <h1>{item.meta.name}</h1>
                   {
-                    item.children.map(child => {
-                      child.meta = child.meta || {}
-                      return <Button key={child.path} style={{
-                        marginRight: '30px'
-                      }} onClick={() => {push({ pathname: child.path })}}>{child.meta.name}</Button>
-                    })
+                    (item.children && item.children.length) &&
+                    <div className="home-list__item_block">
+                      {
+                        item.children.map(child => {
+                          return child.meta.isShow && (<Button key={child.path} style={{
+                            marginRight: '30px'
+                          }} onClick={() => { push({ pathname: child.path }) }} disabled={child.meta.disabled}>{child.meta.name}</Button>)
+                        })
+                      }
+                    </div>
                   }
-                </Panel>)
-              } else {
-                return null
-              }
+                </div>
+              )
             })
           }
-        </Collapse>
+        </div>
       </section>
     );
   }

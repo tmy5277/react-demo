@@ -2,12 +2,15 @@ import React, { Suspense } from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { connect } from 'react-redux'
 import { checkLogin } from './redux/actions/index'
+import $http from './common/fetch'
 
 import { Icon, Layout } from 'antd'
 import NavBar from './components/NavBar/index'
-import RouteGuard from './router/index'
+import RouteRender from './router/index'
 
 import './App.scss'
+
+window.$http = $http
 
 const { Sider, Content } = Layout;
 
@@ -52,7 +55,7 @@ class App extends React.Component {
             {/* <Sider width="260"></Sider> */}
             <Content>
               <Suspense fallback={<Icon type="loading" style={{ fontSize: 24 }} spin />}>
-                <RouteGuard routes={routesMap}/>
+                <RouteRender routes={routesMap}/>
               </Suspense>
             </Content>
           </Layout>

@@ -15,6 +15,17 @@ let urlHandler = {
       })
     }
     return urlObj
+  },
+  obj2query: function (obj) {
+    var result = '';
+    var item;
+    for (item in obj) {
+      result += '&' + item + '=' + encodeURIComponent(obj[item]);
+    }
+    if (result) {
+      result = result.slice(1);
+    }
+    return result;
   }
 }
 

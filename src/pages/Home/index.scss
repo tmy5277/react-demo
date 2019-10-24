@@ -3,7 +3,14 @@
   padding: 50px;
   font-size: 16px;
   color: #222;
-  .home-collapse {
+  .home-list {
     text-align: left;
+    .home-list__item {
+      margin-top: 30px;
+      .home-list__item_block {
+        padding: 10px 0;
+        border-top: 1px solid #000721;
+      }
+    }
   }
 }

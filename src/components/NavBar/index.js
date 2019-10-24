@@ -1,5 +1,5 @@
 import React from 'react'
-import { Link, NavLink } from 'react-router-dom';
+import { Link, NavLink, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux'
 
 import { Layout, Menu } from 'antd'
@@ -17,8 +17,11 @@ const mapStateToProps = state => ({
 class NavBar extends React.Component {
   constructor(props) {
     super(props)
+    console.log(props)
+    let { location: { pathname } } = props
+    let tabIndex = pathname.split('/')[1] === 'testDemo' ? '1' : '0'
     this.state = {
-      tabIndex: '0'
+      tabIndex
     }
   }
   handleTopMenuItemClick = (e) => {
@@ -29,7 +32,6 @@ class NavBar extends React.Component {
   render() {
     let { isLogin, account, topBar } = this.props
     let { tabIndex } = this.state
-    
     return isLogin ? (
       <Header className="navbar-header">
         <Link to="/login" className="navbar-header__link">{account}</Link>
@@ -54,4 +56,4 @@ class NavBar extends React.Component {
   }
 }
 
-export default connect(mapStateToProps)(NavBar)
+export default withRouter(connect(mapStateToProps)(NavBar))

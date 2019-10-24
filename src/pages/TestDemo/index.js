@@ -87,7 +87,10 @@ class TestDemo extends React.Component {
     let { match } = this.props
     return (
         <>
-          <div>{`${this.props.isLogin}`}</div>
+          <div onClick={() => {window.$http.post('http://localhost:8092/v2/cms/account/permission/management/admin/create', {
+            account: 'react',
+            email: 'mingyu.tan@yff.com'
+          })}}>{`${this.props.isLogin}`}</div>
           <img src={logo} className="App-logo" alt="logo" />
           <InputAndBtn placeholder='请输入YYYY/MM/DD的时间格式' handleInputChange={this.handleInputChange}>
             <div>
