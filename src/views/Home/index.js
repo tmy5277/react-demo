@@ -55,9 +55,7 @@ class Home extends React.PureComponent {
                     <div className={style["home-list__item_block"]}>
                       {
                         item.children.map(child => {
-                          return child.meta.isShow && (<Button key={child.path} style={{
-                            marginRight: '30px'
-                          }} onClick={() => { push({ pathname: child.path }) }} disabled={child.meta.disabled}>{child.meta.name}</Button>)
+                          return child.meta.isShow && (<Button key={child.path} className={style["home-list__item_btn"]} onClick={() => { push({ pathname: child.path }) }} disabled={child.meta.disabled}>{child.meta.name}</Button>)
                         })
                       }
                     </div>

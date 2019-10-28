@@ -10,6 +10,10 @@
       .home-list__item_block {
         padding: 10px 0;
         border-top: 1px solid #000721;
+        .home-list__item_btn {
+          margin-right: 30px;
+          font-size: 16px;
+        }
       }
     }
   }
