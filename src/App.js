@@ -2,18 +2,16 @@ import React, { Suspense } from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { connect } from 'react-redux'
 import { checkLogin } from './redux/actions/login'
-import $http from './fetch/index'
+import { $http } from './utils/index'
 
 import ErrorBoundary from './components/ErrorBoundary'
 import { Icon, Layout } from 'antd'
 import NavBar from './components/NavBar/index'
-import RouteRender from './router/index'
+import RouteRender from './components/RouterRender'
 
 import './App.scss'
 
 window.$http = $http
-
-const { Content } = Layout;
 
 const mapStateToProps = state => ({
   routesMap: state.menu.routesMap
@@ -54,12 +52,9 @@ class App extends React.Component {
           <div className="App">
             <Layout className="App-layout">
               <NavBar></NavBar>
-              {/* <Sider width="260"></Sider> */}
-              <Content>
-                <Suspense fallback={<Icon type="loading" style={{ fontSize: 24 }} spin />}>
-                  <RouteRender routes={routesMap} />
-                </Suspense>
-              </Content>
+              <Suspense fallback={<Icon type="loading" style={{ fontSize: 24 }} spin />}>
+                <RouteRender routes={routesMap} />
+              </Suspense>
             </Layout>
           </div>
         </Router>

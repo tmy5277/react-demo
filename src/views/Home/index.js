@@ -46,9 +46,9 @@ class Home extends React.PureComponent {
         <div>{children}</div>
         <div className="home-list">
           {
-            mainEntrance.map(item => {
+            mainEntrance[0].children.map(item => {
               return (
-                <div key={item.path} className="home-list__item">
+                item.meta.isShow && <div key={item.path} className="home-list__item">
                   <h1>{item.meta.name}</h1>
                   {
                     (item.children && item.children.length) &&

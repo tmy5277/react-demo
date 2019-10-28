@@ -11,7 +11,8 @@ const { SubMenu } = Menu
 const mapStateToProps = state => ({
   isLogin: state.login.isLogin,
   account: state.login.account,
-  topBar: state.menu.topBar
+  baseRoutes: state.menu.baseRoutes,
+  mainEntrance: state.menu.mainEntrance
 })
 
 class NavBar extends React.Component {
@@ -19,7 +20,7 @@ class NavBar extends React.Component {
     super(props)
     console.log(props)
     let { location: { pathname } } = props
-    let tabIndex = pathname.split('/')[1] === 'testDemo' ? '1' : '0'
+    let tabIndex = `/${pathname.split('/')[1]}`
     this.state = {
       tabIndex
     }
@@ -30,29 +31,40 @@ class NavBar extends React.Component {
     })
   }
   render() {
-    let { isLogin, account, topBar } = this.props
+    let { isLogin, account, baseRoutes, mainEntrance, history: { push } } = this.props
     let { tabIndex } = this.state
-    return isLogin ? (
+    return isLogin && (
       <Header className="navbar-header">
         <Link to="/login" className="navbar-header__link">{account}</Link>
         <Menu theme="dark" mode="horizontal" selectedKeys={[tabIndex]} onClick={this.handleTopMenuItemClick} className="navbar-menu">
           {
-            topBar.map((item, index) => {
-              let { path, name } = item
+            baseRoutes.filter(item => item.path !== '/login').map(item => {
+              let { path, meta } = item
               return (
-                <Menu.Item key={index} className="navbar-menu__item">
-                  <NavLink to={path}>{name}</NavLink>
+                <Menu.Item key={path} className="navbar-menu__item">
+                  <NavLink to={path}>{meta.name}</NavLink>
                 </Menu.Item>
               )
             })
           }
-          <SubMenu title="展开菜单" style={{lineHeight: '64px'}}>
-            <Menu.Item key="sub1" className="navbar-menu__item">sub1</Menu.Item>
-            <Menu.Item key="sub2" className="navbar-menu__item">sub2</Menu.Item>
-          </SubMenu>
+          {
+            mainEntrance[0].children.map(item => {
+              return (
+                item.meta.isShow && <SubMenu key={item.path} disabled={item.meta.disabled} title={item.meta.name} className="navbar-menu__item">
+                  {
+                    item.children && item.children.length && item.children.map((child, index) => {
+                      return (
+                        child.meta.isShow && <Menu.Item key={child.path} disabled={child.meta.disabled} className="navbar-menu__item" onClick={() => {push({ pathname: child.path })}}>{child.meta.name}</Menu.Item>
+                      )
+                    })
+                  }
+                </SubMenu>
+              )
+            })
+          }
         </Menu>
       </Header>
-    ) : (<></>)
+    )
   }
 }
 

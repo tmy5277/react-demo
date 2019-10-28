@@ -1,8 +1,7 @@
 import React from 'react';
 import { Route, Redirect, Switch } from 'react-router-dom';
 import { Icon } from 'antd'
-import { urlHandler } from '../utils/index'
-import { renderRoutesMap } from './routerUtils'
+import { urlHandler, renderRoutesMap } from '../utils/index'
 
 function NoMatch({ location: { search } }) {
   let pathName = urlHandler.getUrlObj(search).from

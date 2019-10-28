@@ -1,3 +1,5 @@
+export const ASYNC_FETCH = 'ASYNC_FETCH'
+
 export const ADD_TODO = 'ADD_TODO'
 export const TOGGLE_TODO = 'TOGGLE_TODO'
 

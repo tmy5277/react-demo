@@ -7,11 +7,17 @@ import Clock from '../../components/Clock'
 import Timer from '../../components/Timer'
 import AddTodo from '../../components/AddTodo'
 import TodoList from '../../components/TodoList'
+import { asyncFetch } from '../../redux/actions/common'
+import { createAdmin } from '../../config/api'
 
 import '../../App.scss';
 
 const mapStateToProps = state => ({
   isLogin: state.login.isLogin
+})
+
+const mapDispatchToProps = dispatch => ({
+  asyncFetch: (url, params) => dispatch(asyncFetch(url, params))
 })
 
 function Home(props) {
@@ -84,12 +90,10 @@ class TestDemo extends React.Component {
     let { match } = this.props
     return (
       <>
-        <div onClick={() => {
-          window.$http.post('http://localhost:8092/v2/cms/account/permission/management/admin/create', {
+        <div onClick={() => {this.props.asyncFetch(createAdmin, {
             account: 'react',
             email: 'mingyu.tan@yff.com'
-          })
-        }}>{`${this.props.isLogin}`}</div>
+          }) }}>{`${this.props.isLogin}`}</div>
         <img src={logo} className="App-logo" alt="logo" />
         <InputAndBtn placeholder='请输入YYYY/MM/DD的时间格式' handleInputChange={this.handleInputChange}>
           <div>
@@ -127,4 +131,4 @@ class TestDemo extends React.Component {
   }
 }
 
-export default connect(mapStateToProps)(TestDemo);
+export default connect(mapStateToProps, mapDispatchToProps)(TestDemo);

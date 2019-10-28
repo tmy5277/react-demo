@@ -1,8 +1,8 @@
 import React from 'react'
 import { Route } from 'react-router-dom';
-import RouterGuard from './RouterGuard'
+import RouterGuard from '../components/RouterGuard'
 
-function generateFlatRoutes(routes) {
+const generateFlatRoutes = (routes) => {
   let flatRoutes = []
   routes.map(item => {
     if (item.children) {
