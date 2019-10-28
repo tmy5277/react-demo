@@ -3,7 +3,7 @@ import React from 'react';
 import { connect } from 'react-redux'
 import { asyncFetch } from '../../redux/actions/common'
 
-import './index.scss'
+import style from './index.module.scss'
 
 const mapStateToProps = state => ({})
 
@@ -37,7 +37,7 @@ class Order extends React.PureComponent {
   render() {
     let { children } = this.props
     return (
-      <section className="order-main">
+      <section className={style["order-main"]}>
         123
         { children }
       </section>

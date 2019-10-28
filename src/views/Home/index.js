@@ -5,7 +5,7 @@ import { userLogin } from '../../redux/actions/login'
 
 import { Button } from 'antd'
 
-import './index.scss'
+import style from './index.module.scss'
 
 const mapStateToProps = state => ({
   mainEntrance: state.menu.mainEntrance
@@ -42,17 +42,17 @@ class Home extends React.PureComponent {
   render() {
     let { mainEntrance, history: { push }, children } = this.props
     return (
-      <section className="home-main">
+      <section className={style["home-main"]}>
         <div>{children}</div>
-        <div className="home-list">
+        <div className={style["home-list"]}>
           {
             mainEntrance[0].children.map(item => {
               return (
-                item.meta.isShow && <div key={item.path} className="home-list__item">
+                item.meta.isShow && <div key={item.path} className={style["home-list__item"]}>
                   <h1>{item.meta.name}</h1>
                   {
                     (item.children && item.children.length) &&
-                    <div className="home-list__item_block">
+                    <div className={style["home-list__item_block"]}>
                       {
                         item.children.map(child => {
                           return child.meta.isShow && (<Button key={child.path} style={{

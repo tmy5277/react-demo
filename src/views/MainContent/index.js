@@ -3,7 +3,7 @@ import React, { Suspense } from 'react';
 import { Layout, Icon } from 'antd'
 
 import SideBar from '../../components/SideBar/index'
-import './index.scss'
+import style from './index.module.scss'
 
 const { Content } = Layout
 
@@ -35,7 +35,7 @@ class MainContent extends React.PureComponent {
       <>
         <Layout>
           <SideBar width="260" backgroundColor="#fff"></SideBar>
-          <Content className="content-main">
+          <Content className={style["content-main"]}>
             <Suspense fallback={<Icon type="loading" style={{ fontSize: 24 }} spin />}>
               {
                 this.props.children

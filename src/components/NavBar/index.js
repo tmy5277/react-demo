@@ -3,7 +3,7 @@ import { Link, NavLink, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux'
 
 import { Layout, Menu } from 'antd'
-import './index.scss'
+import style from './index.module.scss'
 
 const { Header } = Layout
 const { SubMenu } = Menu
@@ -34,14 +34,14 @@ class NavBar extends React.Component {
     let { isLogin, account, baseRoutes, mainEntrance, history: { push } } = this.props
     let { tabIndex } = this.state
     return isLogin && (
-      <Header className="navbar-header">
-        <Link to="/login" className="navbar-header__link">{account}</Link>
-        <Menu theme="dark" mode="horizontal" selectedKeys={[tabIndex]} onClick={this.handleTopMenuItemClick} className="navbar-menu">
+      <Header className={style["navbar-header"]}>
+        <Link to="/login" className={style["navbar-header__link"]}>{account}</Link>
+        <Menu theme="dark" mode="horizontal" selectedKeys={[tabIndex]} onClick={this.handleTopMenuItemClick} className={style["navbar-menu"]}>
           {
             baseRoutes.filter(item => item.path !== '/login').map(item => {
               let { path, meta } = item
               return (
-                <Menu.Item key={path} className="navbar-menu__item">
+                <Menu.Item key={path} className={style["navbar-menu__item"]}>
                   <NavLink to={path}>{meta.name}</NavLink>
                 </Menu.Item>
               )
@@ -50,11 +50,11 @@ class NavBar extends React.Component {
           {
             mainEntrance[0].children.map(item => {
               return (
-                item.meta.isShow && <SubMenu key={item.path} disabled={item.meta.disabled} title={item.meta.name} className="navbar-menu__item">
+                item.meta.isShow && <SubMenu key={item.path} disabled={item.meta.disabled} title={item.meta.name} className={style["navbar-menu__item"]}>
                   {
                     item.children && item.children.length && item.children.map((child, index) => {
                       return (
-                        child.meta.isShow && <Menu.Item key={child.path} disabled={child.meta.disabled} className="navbar-menu__item" onClick={() => {push({ pathname: child.path })}}>{child.meta.name}</Menu.Item>
+                        child.meta.isShow && <Menu.Item key={child.path} disabled={child.meta.disabled} className={style["navbar-menu__item"]} onClick={() => {push({ pathname: child.path })}}>{child.meta.name}</Menu.Item>
                       )
                     })
                   }

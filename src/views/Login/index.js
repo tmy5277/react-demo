@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import { userLogin } from '../../redux/actions/login'
 import { Form, Icon, Input, Button } from 'antd';
 
-import './index.scss'
+import style from './index.module.scss'
 
 const mailReg = /^([a-zA-Z0-9._-])+@([a-zA-Z0-9_-])+(\.[a-zA-Z0-9_-]+)/
 
@@ -62,10 +62,10 @@ class Login extends React.PureComponent {
     let { account, password, isLogin } = this.props
     // console.log(this.props)
     return (
-      <section className="login-main">
-        <div className="login-wrapper">
-          <div className="login-title"><h2>Login Demo {this.props.isLogin}</h2>{`${account}-${password}-${isLogin}`}</div>
-          <Form className="login-form" onSubmit={this.handleSubmit}>
+      <section className={style["login-main"]}>
+        <div className={style["login-wrapper"]}>
+          <div className={style["login-title"]}><h2>Login Demo {this.props.isLogin}</h2>{`${account}-${password}-${isLogin}`}</div>
+          <Form className={style["login-form"]} onSubmit={this.handleSubmit}>
             <Form.Item>
               {getFieldDecorator('account', {
                 rules: [{
@@ -98,7 +98,7 @@ class Login extends React.PureComponent {
               )}
             </Form.Item>
             <Form.Item>
-              <Button type="primary" htmlType="submit" className="login-form-button" ref={this.submitBtn}>
+              <Button type="primary" htmlType="submit" className={style["login-form-button"]} ref={this.submitBtn}>
                 Log in
               </Button>
             </Form.Item>

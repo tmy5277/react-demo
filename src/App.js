@@ -9,6 +9,7 @@ import { Icon, Layout } from 'antd'
 import NavBar from './components/NavBar/index'
 import RouteRender from './components/RouterRender'
 
+import 'normalize.css'
 import './App.scss'
 
 window.$http = $http

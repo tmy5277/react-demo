@@ -5,7 +5,7 @@ import { asyncFetch } from '../../../redux/actions/common'
 
 import { Result } from 'antd'
 
-import './index.scss'
+import style from './index.module.scss'
 
 const mapStateToProps = state => ({})
 
@@ -38,7 +38,7 @@ class Order2 extends React.PureComponent {
   }
   render() {
     return (
-      <section className="order-main">
+      <section className={style["order-main"]}>
         <Result
           status="404"
           title="Not Found"

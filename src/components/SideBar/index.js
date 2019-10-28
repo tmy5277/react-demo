@@ -3,7 +3,8 @@ import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux'
 
 import { Layout, Menu, Icon } from 'antd'
-import './index.scss'
+import style from './index.module.scss'
+console.log(style)
 
 const { Sider } = Layout
 const { SubMenu } = Menu
@@ -23,15 +24,15 @@ class SideBar extends React.Component {
       <Sider style={{
         backgroundColor
       }}>
-        <Menu mode="inline" onClick={this.handleTopMenuItemClick} className="sidebar-menu">
+        <Menu mode="inline" onClick={this.handleTopMenuItemClick} className={style['sidebar-menu']}>
           {
             mainEntrance[0].children.map(item => {
               return (
-                item.meta.isShow && <SubMenu key={item.path} disabled={item.meta.disabled} title={(<span><Icon type={item.meta.icon} /> {item.meta.name}</span>)} className="sidebar-menu__item">
+                item.meta.isShow && <SubMenu key={item.path} disabled={item.meta.disabled} title={(<span><Icon type={item.meta.icon} /> {item.meta.name}</span>)} className={style['sidebar-menu__item']}>
                   {
                     item.children && item.children.length && item.children.map((child, index) => {
                       return (
-                        child.meta.isShow && <Menu.Item key={child.path} className={`sidebar-menu__item`} disabled={child.meta.disabled} onClick={() => { push({ pathname: child.path }) }}>{child.meta.name}</Menu.Item>
+                        child.meta.isShow && <Menu.Item key={child.path} className={style[`sidebar-menu__item`]} disabled={child.meta.disabled} onClick={() => { push({ pathname: child.path }) }}>{child.meta.name}</Menu.Item>
                       )
                     })
                   }

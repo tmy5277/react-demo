@@ -5,7 +5,7 @@ import { asyncFetch } from '../../../redux/actions/common'
 
 import { Table, Button } from 'antd'
 
-import './index.scss'
+import style from './index.module.scss'
 
 const mapStateToProps = state => ({})
 
@@ -74,7 +74,7 @@ class Order1 extends React.PureComponent {
       })
     }
     return (
-      <section className="order-main">
+      <section className={style["order-main"]}>
         <Table dataSource={order1Data} columns={columnOptions} pagination={{
           pageSize: 5
         }} />
