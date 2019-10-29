@@ -5,7 +5,7 @@ export const userLogin = item => (dispatch, getState) => {
   return new Promise((resolve, reject) => {
     setTimeout(() => {
       let { account, password } = item
-      item.isLogin = account === 'mingyu.tan@yff.com' && password === '123456pb'
+      item.isLogin = account === 'cms.publisher' && password === '123456pb'
       resolve(item.isLogin)
     }, 1000)
   }).then(res => {

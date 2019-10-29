@@ -6,7 +6,7 @@ import { Form, Icon, Input, Button } from 'antd';
 
 import style from './index.module.scss'
 
-const mailReg = /^([a-zA-Z0-9._-])+@([a-zA-Z0-9_-])+(\.[a-zA-Z0-9_-]+)/
+// const mailReg = /^([a-zA-Z0-9._-])+@([a-zA-Z0-9_-])+(\.[a-zA-Z0-9_-]+)/
 
 const mapStateToProps = state => ({
   account: state.login.account,
@@ -69,7 +69,7 @@ class Login extends React.PureComponent {
             <Form.Item>
               {getFieldDecorator('account', {
                 rules: [{
-                  required: true, pattern: mailReg, message: 'Please input your Account corrently!'
+                  required: true, message: 'Please input your Account corrently!'
                 }],
                 validateTrigger: 'onBlur'
               })(

@@ -37,10 +37,43 @@ let mainEntranceArr = [
     meta: {
       name: '视图',
       level: 0,
-      isShow: true,
-      auth: true
+      isShow: true
     },
     children: [
+      {
+        path: '/fund',
+        component: React.lazy(() => import(/* webpackChunkName: 'fund' */'../../views/Order/index')),
+        redirect: true,
+        meta: {
+          name: '基金管理',
+          level: 1,
+          isShow: true,
+          auth: true,
+          icon: 'fund'
+        },
+        children: [
+          {
+            path: '/fund/fundinfo',
+            component: React.lazy(() => import(/* webpackChunkName: 'fund' */'../../views/Order/Order1/index')),
+            meta: {
+              name: '基金管理1',
+              level: 10,
+              disabled: false,
+              isShow: true
+            }
+          },
+          {
+            path: '/fund/combination',
+            component: React.lazy(() => import(/* webpackChunkName: 'fund' */'../../views/Order/Order2/index')),
+            meta: {
+              name: '基金管理2',
+              level: 10,
+              disabled: false,
+              isShow: false
+            }
+          },
+        ]
+      },
       {
         path: '/user',
         component: React.lazy(() => import('../../views/Home/index')),

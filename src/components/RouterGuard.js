@@ -1,6 +1,5 @@
 import React from 'react';
 import { Redirect } from 'react-router-dom';
-import { renderRoutesMap } from '../utils/index'
 import { connect } from 'react-redux'
 import { checkAuth } from '../redux/actions/common'
 
@@ -18,26 +17,31 @@ class RouterGuard extends React.Component {
     this.state = {}
   }
   static getDerivedStateFromProps(nextProps, prevState) {
-    console.log('debug nextProps', nextProps)
-    let { checkAuth, location: { pathname }} = nextProps
-    checkAuth(pathname).then(res => {
-      console.log('debug res', res)
-    })
+    let { checkAuth, match: { path }, location: { pathname }} = nextProps
+    if (path === pathname) {
+      checkAuth(pathname).then(res => {
+        console.log('debug pathname', pathname)
+        console.log('debug match', nextProps.match.path)
+        console.log('debug res', res)
+      })
+    }
     return null
   }
+  // shouldComponentUpdate(nextProps, nextState) {
+  //   return true
+  // }
   componentDidMount() {
-    console.log(this)
   }
   render() {
-    let { isLogin, item, location } = this.props
-    const { auth } = item.meta
+    let { isLogin, routes, location } = this.props
+    const { auth } = routes.meta
     return (auth && !isLogin)  ? (
       <Redirect to={{
         pathname: '/login',
         state: { from: location.pathname }
       }} />
     ) : (
-        <item.component {...this.props}>{item.children && item.children.length && (<>{renderRoutesMap(item.children)}</>)}</item.component>
+        <routes.component {...this.props}></routes.component>
       )
   }
 }

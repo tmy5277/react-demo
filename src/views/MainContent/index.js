@@ -1,6 +1,7 @@
 import React, { Suspense } from 'react';
 // import { Link, NavLink } from 'react-router-dom';
 import { Layout, Icon } from 'antd'
+import { renderRoutesMap } from '../../utils/index'
 
 import SideBar from '../../components/SideBar/index'
 import style from './index.module.scss'
@@ -38,7 +39,7 @@ class MainContent extends React.PureComponent {
           <Content className={style["content-main"]}>
             <Suspense fallback={<Icon type="loading" style={{ fontSize: 24 }} spin />}>
               {
-                this.props.children
+                renderRoutesMap(this.props.routes.children)
               }
             </Suspense>
           </Content>

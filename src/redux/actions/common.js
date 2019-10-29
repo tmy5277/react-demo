@@ -15,7 +15,6 @@ export const asyncFetch = (url, params) => (dispatch, getState) => {
 export const checkAuth = url => (dispatch, getState) => {
   return new Promise((resolve, reject) => {
     setTimeout(() => {
-      console.log('debug url', url)
       resolve(1)
     }, 1000)
   })

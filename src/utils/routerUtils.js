@@ -24,7 +24,7 @@ const renderRoutesMap = (r) => {
     const { exact } = item.meta
     // console.log(item.path)
     return (<Route key={item.path} path={item.path} exact={!!exact} render={props => {
-      return <RouterGuard {...props} item={item}></RouterGuard>
+      return <RouterGuard {...props} routes={item}></RouterGuard>
     }} />)
   })
 }

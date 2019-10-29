@@ -20,7 +20,7 @@ class NavBar extends React.Component {
     super(props)
     console.log(props)
     let { location: { pathname } } = props
-    let tabIndex = `/${pathname.split('/')[1]}`
+    let tabIndex = pathname.indexOf('testDemo') > -1 ? '/testDemo' : '/home'
     this.state = {
       tabIndex
     }
@@ -35,8 +35,8 @@ class NavBar extends React.Component {
     let { tabIndex } = this.state
     return isLogin && (
       <Header className={style["navbar-header"]}>
-        <Link to="/login" className={style["navbar-header__link"]}>{account}</Link>
-        <Menu theme="dark" mode="horizontal" selectedKeys={[tabIndex]} onClick={this.handleTopMenuItemClick} className={style["navbar-menu"]}>
+        <Link to="/home" className={style["navbar-header__link"]}>{account}</Link>
+        {/* <Menu theme="dark" mode="horizontal" selectedKeys={[tabIndex]} onClick={this.handleTopMenuItemClick} className={style["navbar-menu"]}>
           {
             baseRoutes.filter(item => item.path !== '/login').map(item => {
               let { path, meta } = item
@@ -62,7 +62,7 @@ class NavBar extends React.Component {
               )
             })
           }
-        </Menu>
+        </Menu> */}
       </Header>
     )
   }

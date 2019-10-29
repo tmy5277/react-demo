@@ -4,7 +4,6 @@ import { connect } from 'react-redux'
 
 import { Layout, Menu, Icon } from 'antd'
 import style from './index.module.scss'
-console.log(style)
 
 const { Sider } = Layout
 const { SubMenu } = Menu
@@ -16,7 +15,10 @@ const mapStateToProps = state => ({
 class SideBar extends React.Component {
   constructor(props) {
     super(props)
-    this.state = {}
+    let sideBarKey = `/${props.location.pathname.split('/')[1]}`
+    this.state = {
+      sideBarKey
+    }
   }
   render() {
     let { backgroundColor = '#fff', mainEntrance, history: { push } } = this.props
@@ -24,19 +26,20 @@ class SideBar extends React.Component {
       <Sider style={{
         backgroundColor
       }}>
-        <Menu mode="inline" onClick={this.handleTopMenuItemClick} className={style['sidebar-menu']}>
+        <Menu mode="inline" className={style['sidebar-menu']} defaultSelectedKeys={this.state.sideBarKey}>
           {
             mainEntrance[0].children.map(item => {
               return (
-                item.meta.isShow && <SubMenu key={item.path} disabled={item.meta.disabled} title={(<span><Icon type={item.meta.icon} /> {item.meta.name}</span>)} className={style['sidebar-menu__item']}>
-                  {
-                    item.children && item.children.length && item.children.map((child, index) => {
-                      return (
-                        child.meta.isShow && <Menu.Item key={child.path} className={style[`sidebar-menu__item`]} disabled={child.meta.disabled} onClick={() => { push({ pathname: child.path }) }}>{child.meta.name}</Menu.Item>
-                      )
-                    })
-                  }
-                </SubMenu>
+                item.meta.isShow && (
+                  <Menu.Item
+                    key={item.path}
+                    disabled={item.meta.disabled}
+                    className={style['sidebar-menu__item']}
+                    title={item.meta.name}
+                    onClick={() => { push({ pathname: item.path }) }}>
+                      {(<div><Icon type={item.meta.icon} /> {item.meta.name}</div>)}
+                  </Menu.Item>
+                )
               )
             })
           }
