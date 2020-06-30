@@ -1,0 +1,96 @@
+.filter-main {
+  text-align: left;
+  position: relative;
+
+  .filter-form {
+    transition: all 0.3s;
+    .filter-form__item{
+      margin-bottom: 0px;
+    }
+    .filter-form__item_search {
+      // reset
+      :global {
+        margin-bottom: 0px;
+        .ant-slider-rail {
+          background: #e1e1e1;
+        }
+        .ant-slider-handle:focus {
+          background-color: #46a6ff;
+        }
+      }
+    }
+  }
+  // .select-list_wrap{
+  //   max-height: 40px;
+  //   overflow: hidden;
+  //   transition: all 0.5s;
+  // }
+  .select-list_wrap {
+    position: relative;
+    padding-right: 55px;
+    line-height: 40px;
+    max-height: 1000px;
+    :global {
+      .ant-tag {
+        font-size: 14px;
+      }
+    }
+    &.no-expand {
+      max-height: 40px;
+      overflow: hidden;
+    }
+  }
+
+  .select-button_expand {
+    position: absolute;
+    right: 0;
+    height: 40px;
+    top: 0;
+    font-size: 12px;
+  }
+
+  .filter-button_expand{
+    position: absolute;
+    bottom: -26px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 36px;
+    height: 16px;
+    line-height: 16px;
+    border-radius: 4px;
+    margin: 0;
+    background-color: #fff;
+    text-align: center;
+  }
+}
+
+// 整个TableFilter区域收起时的样式
+.form-expand {                
+  transition: all 0.3s;
+  .filter-form__item {
+    display: inline-block;
+    padding-right: 40px;
+    margin-bottom: 0;
+    & > * {
+      display: inline-block;
+      width: auto;
+    }
+  }
+  .radio-group__wrap, .select-list_wrap{
+    padding-right: 0;
+    * {
+      display: inline-block;
+    }
+    & > *:not(:first-of-type){
+      display: none;
+    }
+  }
+  .select-button_expand {
+    display: none;
+  }
+  & > *:not(.filter-form__item){
+    display: none;
+  }
+}
+
+
